@@ -3,7 +3,7 @@ package com.yufaab.yufaabcore.dao.domain;
 import lombok.Data;
 
 @Data
-public class Student {
+public class Students {
   private String firstname;
   private String lastname;
   private String email;

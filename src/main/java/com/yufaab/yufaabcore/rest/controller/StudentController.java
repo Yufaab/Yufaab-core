@@ -1,6 +1,7 @@
 package com.yufaab.yufaabcore.rest.controller;
 
-import com.yufaab.yufaabcore.dao.domain.Student;
+import com.yufaab.yufaabcore.dao.domain.Students;
+import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
 import com.yufaab.yufaabcore.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,47 +13,47 @@ public class StudentController {
   @Autowired
   StudentService studentService;
   @PostMapping("/signup")
-  public void signupStudent(@RequestBody Student student){
-    studentService.signupStudent(student);
+  public void signupStudent(@RequestBody StudentDTO studentDTO){
+    studentService.signupStudent(studentDTO);
   }
 
   @PostMapping("/login")
-  public void loginStudent(@RequestBody Student student){
-    studentService.loginStudent(student);
+  public void loginStudent(@RequestBody Students students){
+    studentService.loginStudent(students);
   }
 
   @PostMapping("/logout")
-  public void logoutStudent(@RequestBody Student student){
-    studentService.logoutStudent(student);
+  public void logoutStudent(@RequestBody Students students){
+    studentService.logoutStudent(students);
   }
 
   @PostMapping("/order")
-  public void createOrder(@RequestBody Student student){
-    studentService.createOrder(student);
+  public void createOrder(@RequestBody Students students){
+    studentService.createOrder(students);
   }
 
   @GetMapping("/order}")
-  public void getAllOrder(@RequestBody Student student){
-    studentService.getAllOrder(student);
+  public void getAllOrder(@RequestBody Students students){
+    studentService.getAllOrder(students);
   }
 
   @GetMapping("/order/{orderId}")
-  public void getOrder(@RequestBody Student student){
-    studentService.getOrder(student);
+  public void getOrder(@RequestBody Students students){
+    studentService.getOrder(students);
   }
 
   @DeleteMapping("/order/{orderId}")
-  public void deleteOrder(@RequestBody Student student){
-    studentService.deleteOrder(student);
+  public void deleteOrder(@RequestBody Students students){
+    studentService.deleteOrder(students);
   }
 
   @GetMapping("/generate/result/{orderId}")
-  public void generateCounsellingData(@RequestBody Student student){
-    studentService.generateCounsellingData(student);
+  public void generateCounsellingData(@RequestBody Students students){
+    studentService.generateCounsellingData(students);
   }
 
   @GetMapping("/generate/report/{orderId}")
-  public void generatePdfReport(@RequestBody Student student){
-    studentService.generatePdfReport(student);
+  public void generatePdfReport(@RequestBody Students students){
+    studentService.generatePdfReport(students);
   }
 }
