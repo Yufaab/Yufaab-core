@@ -44,22 +44,22 @@ public class StudentController {
   }
 
   @GetMapping("/order/{orderId}")
-  public ResponseEntity<Order> getOrder(@RequestBody OrderDTO orderDTO){
-    return ResponseEntity.ok(studentService.getOrder(orderDTO));
+  public ResponseEntity<Order> getOrder(@PathVariable String orderId){
+    return ResponseEntity.ok(studentService.getOrder(orderId));
   }
 
   @DeleteMapping("/order/{orderId}")
-  public void deleteOrder(@RequestBody OrderDTO orderDTO){
-    studentService.deleteOrder(orderDTO);
+  public void deleteOrder(@PathVariable String orderId){
+    studentService.deleteOrder(orderId);
   }
 
   @GetMapping("/generate/result/{orderId}")
-  public void generateCounsellingData(@RequestBody Students students){
-    studentService.generateCounsellingData(students);
+  public void generateCounsellingData(@PathVariable String orderId){
+    studentService.generateCounsellingData(orderId);
   }
 
   @GetMapping("/generate/report/{orderId}")
-  public void generatePdfReport(@RequestBody Students students){
-    studentService.generatePdfReport(students);
+  public void generatePdfReport(@PathVariable String orderId){
+    studentService.generatePdfReport(orderId);
   }
 }

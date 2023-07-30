@@ -99,9 +99,9 @@ public class StudentService {
     }
   }
 
-  public Order getOrder(OrderDTO orderDTO) {
+  public Order getOrder(String orderId) {
     try{
-      return orderRepository.findById(orderDTO.getOrderId())
+      return orderRepository.findById(orderId)
               .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
     }catch (Exception e){
       log.info("Get orders failed with error: {}", e.getMessage());
@@ -109,9 +109,9 @@ public class StudentService {
     }
   }
 
-  public void deleteOrder(OrderDTO orderDTO) {
+  public void deleteOrder(String orderId) {
     try{
-      orderRepository.deleteById(orderDTO.getOrderId());
+      orderRepository.deleteById(orderId);
     }catch (Exception e){
       log.info("Delete order failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
@@ -127,9 +127,9 @@ public class StudentService {
     }
   }
 
-  public void generateCounsellingData(Students students) {
+  public void generateCounsellingData(String orderId) {
   }
 
-  public void generatePdfReport(Students students) {
+  public void generatePdfReport(String orderId) {
   }
 }
