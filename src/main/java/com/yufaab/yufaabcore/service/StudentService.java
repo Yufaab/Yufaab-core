@@ -74,7 +74,7 @@ public class StudentService {
   public void logoutStudent(Students students) {
   }
 
-  public void createOrder(OrderDTO orderDTO) {
+  public Order createOrder(OrderDTO orderDTO) {
     try{
       Order order;
       if(orderDTO.isNewOrder()) {
@@ -90,6 +90,7 @@ public class StudentService {
                 .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
         orderRepository.save(order);
       }
+      return order;
     } catch (Exception e){
       log.info("Create order failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);

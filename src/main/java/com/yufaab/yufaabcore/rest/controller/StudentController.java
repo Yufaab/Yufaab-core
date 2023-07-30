@@ -1,5 +1,6 @@
 package com.yufaab.yufaabcore.rest.controller;
 
+import com.yufaab.yufaabcore.dao.domain.Order;
 import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.rest.dto.request.OrderDTO;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
@@ -31,8 +32,8 @@ public class StudentController {
   }
 
   @PostMapping("/order")
-  public void createOrder(@RequestBody OrderDTO orderDTO){
-    studentService.createOrder(orderDTO);
+  public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO){
+    return ResponseEntity.ok(studentService.createOrder(orderDTO));
   }
 
   @GetMapping("/order")
