@@ -9,6 +9,6 @@ import org.springframework.http.HttpStatus;
 public enum AppErrorCodes {
 
   STUDENT_NOT_ABLE_TO_SIGNUP("Some error occurred", HttpStatus.BAD_REQUEST);
-  private final String message;
-  private final HttpStatus httpStatus;
+  private String message;
+  private HttpStatus httpStatus;
 }

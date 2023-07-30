@@ -4,6 +4,8 @@ import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
 import com.yufaab.yufaabcore.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,13 +15,13 @@ public class StudentController {
   @Autowired
   StudentService studentService;
   @PostMapping("/signup")
-  public void signupStudent(@RequestBody StudentDTO studentDTO){
-    studentService.signupStudent(studentDTO);
+  public ResponseEntity<Students> signupStudent(@RequestBody StudentDTO studentDTO){
+    return ResponseEntity.ok(studentService.signupStudent(studentDTO));
   }
 
   @PostMapping("/login")
-  public void loginStudent(@RequestBody Students students){
-    studentService.loginStudent(students);
+  public ResponseEntity<Students> loginStudent(@RequestBody StudentDTO studentDTO){
+    return ResponseEntity.ok(studentService.loginStudent(studentDTO));
   }
 
   @PostMapping("/logout")
