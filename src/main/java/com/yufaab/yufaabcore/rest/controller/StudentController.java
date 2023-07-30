@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
@@ -37,8 +39,8 @@ public class StudentController {
   }
 
   @GetMapping("/order")
-  public void getAllOrder(@RequestBody Students students){
-    studentService.getAllOrder(students);
+  public ResponseEntity<List<Order>> getAllOrder(@RequestBody OrderDTO orderDTO){
+    return ResponseEntity.ok(studentService.getAllOrder(orderDTO));
   }
 
   @GetMapping("/order/{orderId}")

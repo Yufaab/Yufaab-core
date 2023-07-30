@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @Slf4j
@@ -103,7 +105,13 @@ public class StudentService {
   public void deleteOrder(Students students) {
   }
 
-  public void getAllOrder(Students students) {
+  public List<Order> getAllOrder(OrderDTO orderDTO) {
+    try{
+      return orderRepository.findByOrderedBy(orderDTO.getOrderedBy());
+    }catch (Exception e){
+      log.info("Get all orders failed with error: {}", e.getMessage());
+      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+    }
   }
 
   public void generateCounsellingData(Students students) {
