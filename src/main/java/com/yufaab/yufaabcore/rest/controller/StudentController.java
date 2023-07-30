@@ -1,6 +1,7 @@
 package com.yufaab.yufaabcore.rest.controller;
 
 import com.yufaab.yufaabcore.dao.domain.Students;
+import com.yufaab.yufaabcore.rest.dto.request.OrderDTO;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
 import com.yufaab.yufaabcore.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class StudentController {
   }
 
   @PostMapping("/order")
-  public void createOrder(@RequestBody Students students){
-    studentService.createOrder(students);
+  public void createOrder(@RequestBody OrderDTO orderDTO){
+    studentService.createOrder(orderDTO);
   }
 
   @GetMapping("/order")
