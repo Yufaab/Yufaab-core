@@ -32,7 +32,7 @@ public class StudentController {
     studentService.createOrder(students);
   }
 
-  @GetMapping("/order}")
+  @GetMapping("/order")
   public void getAllOrder(@RequestBody Students students){
     studentService.getAllOrder(students);
   }

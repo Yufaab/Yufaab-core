@@ -21,7 +21,7 @@ public class StudentService {
   private StudentRepository studentRepository;
 
   @Autowired
-  GoogleClient googleClient;
+  private GoogleClient googleClient;
 
   private final StudentMapper studentMapper = StudentMapper.getMapper();
 
