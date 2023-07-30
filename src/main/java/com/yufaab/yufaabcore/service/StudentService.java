@@ -99,7 +99,14 @@ public class StudentService {
     }
   }
 
-  public void getOrder(Students students) {
+  public Order getOrder(OrderDTO orderDTO) {
+    try{
+      return orderRepository.findById(orderDTO.getOrderId())
+              .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
+    }catch (Exception e){
+      log.info("Get all orders failed with error: {}", e.getMessage());
+      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+    }
   }
 
   public void deleteOrder(Students students) {

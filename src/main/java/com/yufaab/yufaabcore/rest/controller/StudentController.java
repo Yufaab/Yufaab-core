@@ -44,8 +44,8 @@ public class StudentController {
   }
 
   @GetMapping("/order/{orderId}")
-  public void getOrder(@RequestBody Students students){
-    studentService.getOrder(students);
+  public ResponseEntity<Order> getOrder(@RequestBody OrderDTO orderDTO){
+    return ResponseEntity.ok(studentService.getOrder(orderDTO));
   }
 
   @DeleteMapping("/order/{orderId}")
