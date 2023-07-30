@@ -1,12 +1,11 @@
 package com.yufaab.yufaabcore.rest.controller;
 
-import com.yufaab.yufaabcore.dao.domain.Order;
+import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.rest.dto.request.OrderDTO;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
 import com.yufaab.yufaabcore.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,17 +33,17 @@ public class StudentController {
   }
 
   @PostMapping("/order")
-  public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO){
+  public ResponseEntity<Orders> createOrder(@RequestBody OrderDTO orderDTO){
     return ResponseEntity.ok(studentService.createOrder(orderDTO));
   }
 
   @GetMapping("/order")
-  public ResponseEntity<List<Order>> getAllOrder(@RequestBody OrderDTO orderDTO){
+  public ResponseEntity<List<Orders>> getAllOrder(@RequestBody OrderDTO orderDTO){
     return ResponseEntity.ok(studentService.getAllOrder(orderDTO));
   }
 
   @GetMapping("/order/{orderId}")
-  public ResponseEntity<Order> getOrder(@PathVariable String orderId){
+  public ResponseEntity<Orders> getOrder(@PathVariable String orderId){
     return ResponseEntity.ok(studentService.getOrder(orderId));
   }
 

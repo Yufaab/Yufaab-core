@@ -18,12 +18,12 @@ public class Students {
   private String phone;
   private List<String> orders;
 
-  public void addOrder(Order order) {
+  public void addOrder(Orders orders) {
     if(Objects.isNull(this.orders)){
       this.orders = new ArrayList<>();
-      this.orders.add(order.getId());
+      this.orders.add(orders.getId());
       return;
     }
-    this.orders.add(order.getId());
+    this.orders.add(orders.getId());
   }
 }

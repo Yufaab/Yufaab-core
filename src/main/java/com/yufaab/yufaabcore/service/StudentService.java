@@ -1,6 +1,6 @@
 package com.yufaab.yufaabcore.service;
 
-import com.yufaab.yufaabcore.dao.domain.Order;
+import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.dao.repository.OrderRepository;
 import com.yufaab.yufaabcore.dao.repository.StudentRepository;
@@ -76,30 +76,30 @@ public class StudentService {
   public void logoutStudent(Students students) {
   }
 
-  public Order createOrder(OrderDTO orderDTO) {
+  public Orders createOrder(OrderDTO orderDTO) {
     try{
-      Order order;
+      Orders orders;
       if(orderDTO.isNewOrder()) {
         log.info("New order found with parameters: {}",orderDTO.toString());
-        order = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO));
+        orders = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO));
         Students students = studentRepository.findById(orderDTO.getOrderedBy())
                 .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
-        students.addOrder(order);
+        students.addOrder(orders);
         studentRepository.save(students);
       } else {
         log.info("Update in the existing order with parameters: {}", orderDTO.toString());
-        order = orderRepository.findById(orderDTO.getOrderId())
+        orders = orderRepository.findById(orderDTO.getOrderId())
                 .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
-        orderRepository.save(order);
+        orderRepository.save(orders);
       }
-      return order;
+      return orders;
     } catch (Exception e){
       log.info("Create order failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
     }
   }
 
-  public Order getOrder(String orderId) {
+  public Orders getOrder(String orderId) {
     try{
       return orderRepository.findById(orderId)
               .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
@@ -118,7 +118,7 @@ public class StudentService {
     }
   }
 
-  public List<Order> getAllOrder(OrderDTO orderDTO) {
+  public List<Orders> getAllOrder(OrderDTO orderDTO) {
     try{
       return orderRepository.findByOrderedBy(orderDTO.getOrderedBy());
     }catch (Exception e){

@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import java.util.List;
 
 @Data
-public class Order {
+public class Orders {
   @Id
   private String id;
   private String rank;
