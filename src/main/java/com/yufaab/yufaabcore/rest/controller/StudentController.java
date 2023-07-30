@@ -49,8 +49,8 @@ public class StudentController {
   }
 
   @DeleteMapping("/order/{orderId}")
-  public void deleteOrder(@RequestBody Students students){
-    studentService.deleteOrder(students);
+  public void deleteOrder(@RequestBody OrderDTO orderDTO){
+    studentService.deleteOrder(orderDTO);
   }
 
   @GetMapping("/generate/result/{orderId}")
