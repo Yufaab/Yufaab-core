@@ -56,8 +56,8 @@ public class StudentController {
   }
 
   @GetMapping("/generate/result/{orderId}")
-  public void generateCounsellingData(@PathVariable String orderId){
-    studentService.generateCounsellingData(orderId);
+  public ResponseEntity<List<Counselling2022>> generateCounsellingData(@PathVariable String orderId){
+    return ResponseEntity.ok(studentService.generateCounsellingData(orderId));
   }
 
   @GetMapping("/generate/report/{orderId}")

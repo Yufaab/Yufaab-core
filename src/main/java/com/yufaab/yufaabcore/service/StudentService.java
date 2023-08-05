@@ -1,5 +1,6 @@
 package com.yufaab.yufaabcore.service;
 
+import com.yufaab.yufaabcore.dao.domain.Counselling2022;
 import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.dao.repository.CounsellingDAL;
@@ -84,7 +85,7 @@ public class StudentService {
     try{
       Orders orders;
       if(orderDTO.isNewOrder()) {
-        log.info("New order found with parameters: {}",orderDTO.toString());
+        log.info("New order found with parameters: {}", orderDTO.toString());
         orders = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO));
         Students students = studentRepository.findById(orderDTO.getOrderedBy())
                 .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
@@ -131,11 +132,12 @@ public class StudentService {
     }
   }
 
-  public void generateCounsellingData(String orderId) {
+  public List<Counselling2022> generateCounsellingData(String orderId) {
     try{
       Orders orders = orderRepository.findById(orderId)
               .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
-      counsellingDAL.dataGenerator(orders);
+      List<Counselling2022> counselling2022List = counsellingDAL.dataGenerator(orders);
+      return counselling2022List;
     }catch (Exception e){
       log.info("Generate counselling data failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);

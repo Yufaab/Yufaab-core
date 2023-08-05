@@ -1,6 +1,7 @@
 package com.yufaab.yufaabcore.dao.domain;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
+@EntityScan
 public class Students {
   @Id
   private String id;

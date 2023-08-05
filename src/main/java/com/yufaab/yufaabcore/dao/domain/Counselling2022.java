@@ -1,9 +1,11 @@
 package com.yufaab.yufaabcore.dao.domain;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 
 @Data
+@EntityScan
 public class Counselling2022 {
   @Id
   private String id;
@@ -14,4 +16,6 @@ public class Counselling2022 {
   private String gender;
   private int openingRank;
   private int closingRank;
+  private int institutePref;
+  private int academicProgramNamePref;
 }
