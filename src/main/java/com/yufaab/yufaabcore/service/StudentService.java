@@ -2,6 +2,7 @@ package com.yufaab.yufaabcore.service;
 
 import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.dao.domain.Students;
+import com.yufaab.yufaabcore.dao.repository.CounsellingDAL;
 import com.yufaab.yufaabcore.dao.repository.OrderRepository;
 import com.yufaab.yufaabcore.dao.repository.StudentRepository;
 import com.yufaab.yufaabcore.exception.AppErrorCodes;
@@ -29,6 +30,9 @@ public class StudentService {
 
   @Autowired
   private OrderRepository orderRepository;
+
+  @Autowired
+  private CounsellingDAL counsellingDAL;
 
   @Autowired
   private GoogleClient googleClient;
@@ -128,6 +132,14 @@ public class StudentService {
   }
 
   public void generateCounsellingData(String orderId) {
+    try{
+      Orders orders = orderRepository.findById(orderId)
+              .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
+      counsellingDAL.dataGenerator(orders);
+    }catch (Exception e){
+      log.info("Generate counselling data failed with error: {}", e.getMessage());
+      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+    }
   }
 
   public void generatePdfReport(String orderId) {
