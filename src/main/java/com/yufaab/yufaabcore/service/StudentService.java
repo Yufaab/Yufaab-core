@@ -136,8 +136,7 @@ public class StudentService {
     try{
       Orders orders = orderRepository.findById(orderId)
               .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP));
-      List<Counselling2022> counselling2022List = counsellingDAL.dataGenerator(orders);
-      return counselling2022List;
+      return counsellingDAL.dataGenerator(orders);
     }catch (Exception e){
       log.info("Generate counselling data failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);

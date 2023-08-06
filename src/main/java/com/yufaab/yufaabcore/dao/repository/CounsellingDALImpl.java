@@ -40,23 +40,17 @@ public class CounsellingDALImpl implements CounsellingDAL {
   private List<Counselling2022> makeCombineData(
           AggregationResults<Counselling2022> dataPref, AggregationResults<Counselling2022> dataCommon) {
     try {
+      Set<String> st = new HashSet<>();
       List<Counselling2022> filteredData = new ArrayList<>();
       for(Counselling2022 data : dataPref){
+        st.add(data.getId());
         filteredData.add(data);
       }
       for(Counselling2022 data : dataCommon){
-        boolean found = false;
-        for(Counselling2022 data2: dataPref){
-          if(data.getId().equals(data2.getId())){
-            found = true;
-            break;
-          }
-        }
-        if(!found){
+        if(!st.contains(data.getId())){
           filteredData.add(data);
         }
       }
-      System.out.println(filteredData.size());
       return filteredData;
     }catch (Exception e){
       log.info("Data generator failed with error: {}", e.getMessage());
