@@ -33,7 +33,7 @@ public class CounsellingDALImpl implements CounsellingDAL {
       return makeCombineData(dataPref, dataCommon);
     } catch (Exception e){
       log.info("Data generator failed with error: {}", e.getMessage());
-      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+      throw new AppException(AppErrorCodes.UNABLE_TO_GENERATE_REPORT);
     }
   }
 
@@ -54,7 +54,7 @@ public class CounsellingDALImpl implements CounsellingDAL {
       return filteredData;
     }catch (Exception e){
       log.info("Data generator failed with error: {}", e.getMessage());
-      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+      throw new AppException(AppErrorCodes.UNABLE_TO_GENERATE_REPORT);
     }
   }
 
@@ -70,7 +70,7 @@ public class CounsellingDALImpl implements CounsellingDAL {
               .aggregate(newAggregation(aggregationList), "counselling2022", Counselling2022.class);
     }catch (Exception e){
       log.info("Data generator failed with error: {}", e.getMessage());
-      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+      throw new AppException(AppErrorCodes.UNABLE_TO_GENERATE_REPORT);
     }
   }
 
@@ -97,7 +97,7 @@ public class CounsellingDALImpl implements CounsellingDAL {
               .aggregate(newAggregation(aggregationList), "counselling2022", Counselling2022.class);
     }catch (Exception e){
       log.info("Data generator failed with error: {}", e.getMessage());
-      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP);
+      throw new AppException(AppErrorCodes.UNABLE_TO_GENERATE_REPORT);
     }
   }
 }
