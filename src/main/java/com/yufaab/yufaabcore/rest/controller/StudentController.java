@@ -20,6 +20,7 @@ public class StudentController {
 
   @Autowired
   StudentService studentService;
+
   @PostMapping("/signup")
   public ResponseEntity<Students> signupStudent(@RequestBody StudentDTO studentDTO){
     return ResponseEntity.ok(studentService.signupStudent(studentDTO));
