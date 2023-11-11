@@ -5,6 +5,7 @@ import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.rest.dto.request.OrderDTO;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
+import com.yufaab.yufaabcore.rest.dto.response.StudentResDTO;
 import com.yufaab.yufaabcore.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,12 +23,12 @@ public class StudentController {
   StudentService studentService;
 
   @PostMapping("/signup")
-  public ResponseEntity<Students> signupStudent(@RequestBody StudentDTO studentDTO){
+  public ResponseEntity<StudentResDTO> signupStudent(@RequestBody StudentDTO studentDTO){
     return ResponseEntity.ok(studentService.signupStudent(studentDTO));
   }
 
   @PostMapping("/login")
-  public ResponseEntity<Students> loginStudent(@RequestBody StudentDTO studentDTO){
+  public ResponseEntity<StudentResDTO> loginStudent(@RequestBody StudentDTO studentDTO){
     return ResponseEntity.ok(studentService.loginStudent(studentDTO));
   }
 

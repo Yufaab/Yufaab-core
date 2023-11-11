@@ -13,6 +13,8 @@ import com.yufaab.yufaabcore.rest.dto.mapper.OrderMapper;
 import com.yufaab.yufaabcore.rest.dto.mapper.StudentMapper;
 import com.yufaab.yufaabcore.rest.dto.request.OrderDTO;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
+import com.yufaab.yufaabcore.rest.dto.response.StudentResDTO;
+import com.yufaab.yufaabcore.util.JwtHelper;
 import com.yufaab.yufaabcore.service.externalservice.GoogleClient;
 import com.yufaab.yufaabcore.util.PDFGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,9 @@ public class StudentService {
   private PDFGenerator pdfGenerator;
 
   @Autowired
+  private JwtHelper jwtHelper;
+
+  @Autowired
   private StudentRepository studentRepository;
 
   @Autowired
@@ -48,7 +53,7 @@ public class StudentService {
 
   private final OrderMapper orderMapper = OrderMapper.getMapper();
 
-  public Students signupStudent(StudentDTO studentDTO) {
+  public StudentResDTO signupStudent(StudentDTO studentDTO) {
     try{
       Students students;
       if(!StringUtils.isEmpty(studentDTO.getGoogleAccessToken())){
@@ -58,15 +63,15 @@ public class StudentService {
       } else {
         students = studentMapper.studentDTOtoStudents(studentDTO);
       }
-      studentRepository.save(students);
-      return students;
+      Students studentCreated = studentRepository.save(students);
+      return studentMapper.studentToStudentResDTO(studentCreated, jwtHelper.generateToken(studentCreated.getId()));
     } catch (Exception e){
       log.info("Student signup failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP, e.getMessage());
     }
   }
 
-  public Students loginStudent(StudentDTO studentDTO) {
+  public StudentResDTO loginStudent(StudentDTO studentDTO) {
     try{
       String email;
       if(!StringUtils.isEmpty(studentDTO.getGoogleAccessToken())){
@@ -76,8 +81,8 @@ public class StudentService {
       } else {
         email = studentDTO.getEmail();
       }
-      return studentRepository
-              .findByEmailAndPassword(email,studentDTO.getPassword());
+      Students students = studentRepository.findByEmailAndPassword(email,studentDTO.getPassword());
+      return studentMapper.studentToStudentResDTO(students, jwtHelper.generateToken(students.getId()));
     }catch(Exception e){
       log.info("Login signup failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_LOGIN);
