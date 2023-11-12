@@ -20,9 +20,6 @@ import com.yufaab.yufaabcore.util.PDFGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +64,10 @@ public class StudentService {
         students = studentMapper.studentDTOtoStudents(studentDTO);
       }
       Students studentCreated = studentRepository.save(students);
-      return studentMapper.studentToStudentResDTO(studentCreated, jwtHelper.generateToken(studentCreated.getId()));
+      String token = jwtHelper.generateToken(studentCreated.getId());
+      studentCreated.saveToken(token);
+      studentRepository.save(studentCreated);
+      return studentMapper.studentToStudentResDTO(studentCreated, token);
     } catch (Exception e){
       log.info("Student signup failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_SIGNUP, e.getMessage());
@@ -85,14 +85,26 @@ public class StudentService {
         email = studentDTO.getEmail();
       }
       Students students = studentRepository.findByEmailAndPassword(email,studentDTO.getPassword());
-      return studentMapper.studentToStudentResDTO(students, jwtHelper.generateToken(students.getId()));
+      String token = jwtHelper.generateToken(students.getId());
+      students.saveToken(token);
+      studentRepository.save(students);
+      return studentMapper.studentToStudentResDTO(students, token);
     }catch(Exception e){
       log.info("Login signup failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_LOGIN);
     }
   }
 
-  public void logoutStudent(Students students) {
+  public void logoutStudent() {
+    try{
+      Students student = studentRepository.findById(jwtHelper.getUserId())
+              .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_FOUND));
+      student.removeToken(jwtHelper.getToken());
+      studentRepository.save(student);
+    } catch (Exception e){
+      log.info("Log out student failed with error: {}", e.getMessage());
+      throw new AppException(AppErrorCodes.STUDENT_NOT_ABLE_TO_LOGOUT);
+    }
   }
 
   public Orders createOrder(OrderDTO orderDTO) {

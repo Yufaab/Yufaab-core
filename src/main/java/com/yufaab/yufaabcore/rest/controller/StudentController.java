@@ -33,8 +33,8 @@ public class StudentController {
   }
 
   @PostMapping("/logout")
-  public void logoutStudent(@RequestBody Students students){
-    studentService.logoutStudent(students);
+  public void logoutStudent(){
+    studentService.logoutStudent();
   }
 
   @PostMapping("/order")

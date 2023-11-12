@@ -74,4 +74,7 @@ public class JwtHelper {
   public String getUserId() {
     return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
   }
+  public String getToken() {
+    return (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+  }
 }
