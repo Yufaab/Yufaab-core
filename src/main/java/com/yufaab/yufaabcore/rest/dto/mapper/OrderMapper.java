@@ -11,15 +11,15 @@ public interface OrderMapper {
     return Mappers.getMapper(OrderMapper.class);
   }
 
-  @Mapping(source = "rank", target = "rank")
-  @Mapping(source = "seatType", target = "seatType")
-  @Mapping(source = "gender", target = "gender")
-  @Mapping(source = "categoryRank", target = "categoryRank")
-  @Mapping(source = "state", target = "state")
-  @Mapping(source = "academicProgramName", target = "academicProgramName")
-  @Mapping(source = "institute", target = "institute")
-  @Mapping(source = "examType", target = "examType")
-  @Mapping(source = "orderedBy", target = "orderedBy")
+  @Mapping(source = "orderDTO.rank", target = "rank")
+  @Mapping(source = "orderDTO.seatType", target = "seatType")
+  @Mapping(source = "orderDTO.gender", target = "gender")
+  @Mapping(source = "orderDTO.categoryRank", target = "categoryRank")
+  @Mapping(source = "orderDTO.state", target = "state")
+  @Mapping(source = "orderDTO.academicProgramName", target = "academicProgramName")
+  @Mapping(source = "orderDTO.institute", target = "institute")
+  @Mapping(source = "orderDTO.examType", target = "examType")
+  @Mapping(source = "userId", target = "orderedBy")
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  Orders orderDTOtoOrder(OrderDTO orderDTO);
+  Orders orderDTOtoOrder(OrderDTO orderDTO, String userId);
 }

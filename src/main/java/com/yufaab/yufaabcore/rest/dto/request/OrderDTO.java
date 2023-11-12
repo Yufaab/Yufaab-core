@@ -21,6 +21,5 @@ public class OrderDTO {
   private List<String> academicProgramName;
   private List<String> institute;
   private String examType;
-  private String orderedBy;
   private String orderId;
 }

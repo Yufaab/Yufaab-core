@@ -20,7 +20,6 @@ public class LoggingService {
   private ObjectMapper objectMapper;
 
   public void logRequest(HttpServletRequest httpServletRequest, Object body, boolean includeRequestBody) {
-    System.out.println("I am here 2");
     try {
       List<String> requestDataList = new ArrayList<>();
       requestDataList.add("LOGGING REQUEST INFO STARTS");

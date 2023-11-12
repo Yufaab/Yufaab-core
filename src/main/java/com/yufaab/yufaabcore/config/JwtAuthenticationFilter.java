@@ -9,6 +9,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Autowired
   private JwtHelper jwtHelper;
@@ -39,22 +41,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       token = requestHeader.substring(4);
       try {
         userId = this.jwtHelper.extractUserId(token);
-        System.out.println(userId);
-
       } catch (IllegalArgumentException e) {
-        System.out.println("Illegal Argument while fetching the username !!");
-        e.printStackTrace();
+        log.info("Illegal Argument while fetching the username !! with error: {}", e.getMessage());
       } catch (ExpiredJwtException e) {
-        System.out.println("Given jwt token is expired !!");
-        e.printStackTrace();
+        log.info("Given jwt token is expired !!");
       } catch (MalformedJwtException e) {
-        System.out.println("Some changed has done in token !! Invalid Token");
-        e.printStackTrace();
+        log.info("Some changed has done in token !! Invalid Token with error: {}", e.getMessage());
       } catch (Exception e) {
-        e.printStackTrace();
+        log.info("Some error occurred with message : {}", e.getMessage());
       }
     } else {
-      System.out.println("Invalid Header Value !! ");
+      log.info("Header present is : {}", requestHeader);
     }
 
     if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -64,7 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
       } else {
-        System.out.println("Validation fails !!");
+        log.info("Validation fails !!");
       }
     }
     filterChain.doFilter(request, response);

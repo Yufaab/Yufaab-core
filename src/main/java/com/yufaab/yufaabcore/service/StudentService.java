@@ -20,6 +20,9 @@ import com.yufaab.yufaabcore.util.PDFGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,10 +99,11 @@ public class StudentService {
     try{
       Orders orders;
       if(orderDTO.isNewOrder()) {
-        log.info("New order found with parameters: {}", orderDTO.toString());
-        orders = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO));
-        Students students = studentRepository.findById(orderDTO.getOrderedBy())
+        String userId = jwtHelper.getUserId();
+        log.info("New order found with parameters: {} and user id: {}", orderDTO.toString(), userId);
+        Students students = studentRepository.findById(userId)
                 .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_FOUND));
+        orders = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO,userId));
         students.addOrder(orders);
         studentRepository.save(students);
       } else {
@@ -134,9 +138,9 @@ public class StudentService {
     }
   }
 
-  public List<Orders> getAllOrder(OrderDTO orderDTO) {
+  public List<Orders> getAllOrder() {
     try{
-      return orderRepository.findByOrderedBy(orderDTO.getOrderedBy());
+      return orderRepository.findByOrderedBy(jwtHelper.getUserId());
     }catch (Exception e){
       log.info("Get all orders failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.ORDER_NOT_FOUND);

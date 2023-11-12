@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,7 @@ import java.util.function.Function;
 public class JwtHelper {
 
   public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+
   public String generateToken(String userName) {
     Map<String, Object> claims = new HashMap<>();
     return createToken(claims, userName);
@@ -28,7 +31,7 @@ public class JwtHelper {
             .setClaims(claims)
             .setSubject(userName)
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 5))
             .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
   }
 
@@ -68,5 +71,7 @@ public class JwtHelper {
     return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
   }
 
-
+  public String getUserId() {
+    return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+  }
 }

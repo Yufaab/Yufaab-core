@@ -43,8 +43,8 @@ public class StudentController {
   }
 
   @GetMapping("/order")
-  public ResponseEntity<List<Orders>> getAllOrder(@RequestBody OrderDTO orderDTO){
-    return ResponseEntity.ok(studentService.getAllOrder(orderDTO));
+  public ResponseEntity<List<Orders>> getAllOrder(){
+    return ResponseEntity.ok(studentService.getAllOrder());
   }
 
   @GetMapping("/order/{orderId}")
