@@ -42,6 +42,12 @@ public class StudentController {
     return ResponseEntity.ok(studentService.createOrder(orderDTO));
   }
 
+  @PutMapping("/order")
+  public ResponseEntity<Orders> updateOrder(@RequestBody OrderDTO orderDTO){
+    orderDTO.isValid();
+    return ResponseEntity.ok(studentService.updateOrder(orderDTO));
+  }
+
   @GetMapping("/order")
   public ResponseEntity<List<Orders>> getAllOrder(){
     return ResponseEntity.ok(studentService.getAllOrder());

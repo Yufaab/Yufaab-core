@@ -110,22 +110,29 @@ public class StudentService {
   public Orders createOrder(OrderDTO orderDTO) {
     try{
       Orders orders;
-      if(orderDTO.isNewOrder()) {
-        String userId = jwtHelper.getUserId();
-        log.info("New order found with parameters: {} and user id: {}", orderDTO.toString(), userId);
-        Students students = studentRepository.findById(userId)
-                .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_FOUND));
-        orders = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO,userId));
-        students.addOrder(orders);
-        studentRepository.save(students);
-      } else {
-        log.info("Update in the existing order with parameters: {}", orderDTO.toString());
-        orders = orderRepository.findById(orderDTO.getOrderId())
-                .orElseThrow(() -> new AppException(AppErrorCodes.ORDER_NOT_FOUND));
-        orderRepository.save(orders);
-      }
+      String userId = jwtHelper.getUserId();
+      log.info("New order found with parameters: {} and user id: {}", orderDTO.toString(), userId);
+      Students students = studentRepository.findById(userId)
+              .orElseThrow(() -> new AppException(AppErrorCodes.STUDENT_NOT_FOUND));
+      orders = orderRepository.save(orderMapper.orderDTOtoOrder(orderDTO,userId));
+      students.addOrder(orders);
+      studentRepository.save(students);
       return orders;
     } catch (Exception e){
+      log.info("Create order failed with error: {}", e.getMessage());
+      throw new AppException(AppErrorCodes.ORDER_NOT_CREATED_OR_UPDATED);
+    }
+  }
+
+  public Orders updateOrder(OrderDTO orderDTO) {
+    try{
+      String userId = jwtHelper.getUserId();
+      log.info("New order found with parameters: {} and user id: {}", orderDTO.toString(), userId);
+      Orders orders = orderRepository.findById(orderDTO.getOrderId())
+              .orElseThrow(() -> new AppException(AppErrorCodes.ORDER_NOT_CREATED_OR_UPDATED));
+      orderMapper.orderDTOtoOrderUpdate(orderDTO, orders);
+      return orderRepository.save(orders);
+    } catch (Exception e) {
       log.info("Create order failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.ORDER_NOT_CREATED_OR_UPDATED);
     }

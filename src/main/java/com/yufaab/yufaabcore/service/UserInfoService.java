@@ -22,4 +22,10 @@ public class UserInfoService implements UserDetailsService {
             .orElseThrow(()-> new AppException(AppErrorCodes.STUDENT_NOT_FOUND));
     return new User(students.getId(),students.getPassword(),new ArrayList<>());
   }
+
+  public boolean tokenExists(String userId, String token) {
+    Students students = studentRepository.findById(userId)
+            .orElseThrow(()-> new AppException(AppErrorCodes.STUDENT_NOT_FOUND));
+    return students.getTokens().contains(token);
+  }
 }

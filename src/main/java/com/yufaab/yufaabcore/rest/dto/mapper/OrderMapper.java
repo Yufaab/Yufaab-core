@@ -22,4 +22,15 @@ public interface OrderMapper {
   @Mapping(source = "userId", target = "orderedBy")
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   Orders orderDTOtoOrder(OrderDTO orderDTO, String userId);
+
+  @Mapping(source = "orderDTO.rank", target = "orders.rank")
+  @Mapping(source = "orderDTO.seatType", target = "orders.seatType")
+  @Mapping(source = "orderDTO.gender", target = "orders.gender")
+  @Mapping(source = "orderDTO.categoryRank", target = "orders.categoryRank")
+  @Mapping(source = "orderDTO.state", target = "orders.state")
+  @Mapping(source = "orderDTO.academicProgramName", target = "orders.academicProgramName")
+  @Mapping(source = "orderDTO.institute", target = "orders.institute")
+  @Mapping(source = "orderDTO.examType", target = "orders.examType")
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void orderDTOtoOrderUpdate(OrderDTO orderDTO, @MappingTarget Orders orders);
 }

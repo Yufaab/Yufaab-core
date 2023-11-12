@@ -1,9 +1,12 @@
 package com.yufaab.yufaabcore.rest.dto.request;
 
+import com.yufaab.yufaabcore.exception.AppErrorCodes;
+import com.yufaab.yufaabcore.exception.AppException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -12,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
-  private boolean newOrder;
   private String rank;
   private String seatType;
   private String gender;
@@ -22,4 +24,10 @@ public class OrderDTO {
   private List<String> institute;
   private String examType;
   private String orderId;
+
+  public void isValid() {
+    if(StringUtils.isEmpty(orderId)){
+      throw new AppException(AppErrorCodes.ORDER_NOT_FOUND);
+    }
+  }
 }
