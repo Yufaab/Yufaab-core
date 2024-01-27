@@ -1,5 +1,6 @@
 package com.yufaab.yufaabcore.dao.repository;
 
+import com.mongodb.client.DistinctIterable;
 import com.yufaab.yufaabcore.dao.domain.Counselling2022;
 import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.exception.AppErrorCodes;
@@ -99,5 +100,10 @@ public class CounsellingDALImpl implements CounsellingDAL {
       log.info("Data generator failed with error: {}", e.getMessage());
       throw new AppException(AppErrorCodes.UNABLE_TO_GENERATE_REPORT);
     }
+  }
+
+  @Override
+  public List<String> getSearchQuery(String fieldName){
+    return mongoTemplate.query(Counselling2022.class).distinct(fieldName).as(String.class).all();
   }
 }

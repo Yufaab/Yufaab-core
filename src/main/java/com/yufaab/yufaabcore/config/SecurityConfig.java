@@ -33,7 +33,7 @@ public class SecurityConfig {
     http.csrf(AbstractHttpConfigurer::disable)
             .authorizeRequests()
             .requestMatchers("").authenticated()
-            .requestMatchers("/app/health", "/api/student/login", "/api/student/signup").permitAll()
+            .requestMatchers("/app/health", "/api/student/login", "/api/student/signup", "/api/student/get-query-data").permitAll()
             .anyRequest()
             .authenticated()
             .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))

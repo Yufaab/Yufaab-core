@@ -1,10 +1,12 @@
 package com.yufaab.yufaabcore.rest.controller;
 
+import com.mongodb.client.DistinctIterable;
 import com.yufaab.yufaabcore.dao.domain.Counselling2022;
 import com.yufaab.yufaabcore.dao.domain.Orders;
 import com.yufaab.yufaabcore.dao.domain.Students;
 import com.yufaab.yufaabcore.rest.dto.request.OrderDTO;
 import com.yufaab.yufaabcore.rest.dto.request.StudentDTO;
+import com.yufaab.yufaabcore.rest.dto.response.SearchResDTO;
 import com.yufaab.yufaabcore.rest.dto.response.StudentResDTO;
 import com.yufaab.yufaabcore.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +73,10 @@ public class StudentController {
   @GetMapping(value = "/generate/report/{orderId}", produces = MediaType.APPLICATION_PDF_VALUE)
   public ResponseEntity<byte[]> generatePdfReport(@PathVariable String orderId){
     return ResponseEntity.ok(studentService.generatePdfReport(orderId));
+  }
+
+  @GetMapping(value = "/get-query-data")
+  public ResponseEntity<SearchResDTO> getSearchData() {
+    return ResponseEntity.ok(studentService.getSearchData());
   }
 }
